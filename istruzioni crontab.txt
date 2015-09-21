@@ -1,0 +1,23 @@
+Per vedere quali sono i cronjob installati in un server, usare il comando:
+crontab -l
+
+Questo è l'output del comando eseguito sul server di ViDissetiamo:
+
+16,36,56 * * * * ~/webapps/vdgestionale/apache2/bin/start
+0 3 * * * mysqldump --defaults-file=$HOME/db_backups/gestionale.cnf -u <NOME-UTENTE-DB> <NOME-DB> > $HOME/db_backups/gestionale/VdGestionale_`date +\%Y-\%m-\%d`.sql 2>> $HOME/db_backups/cron.log
+
+
+La prima riga serve a far riavviare django ogni 20 minuti ed è aggiunta in automatico da webfaction.
+La seconda riga è quella creata da me e serve a fare un dump del database ogni giorno alle 3 di mattina.
+Il file gestionale.cnf contiene la password del database. Il contenuto del file è il seguente:
+
+[client]
+password=<inserire_password>
+
+
+Ricordarsi di creare anche la sottocartella 'gestionale' dove vengono messi tutti i file creati.
+
+
+Database studio gamma (wordpress):
+mysqldump --defaults-file=$HOME/db_backups/studio_gamma/studio_gamma_wp.cnf -u mosta_sito_sg_wp mosta_sito_sg_wp > $HOME/db_backups/studio_gamma/StudioGamma_`date +\%Y-\%m-\%d`.sql 2>> $HOME/db_backups/studio_gamma/cron_dump.log
+
